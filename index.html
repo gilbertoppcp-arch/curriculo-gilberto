@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gilberto Junior — Currículo & Guia</title>
+<style>
+  /* ── TOKENS ─────────────────────────────────────────────────────── */
+  :root {
+    --navy:    #1F3864;
+    --blue:    #2E75B6;
+    --blue-lt: #D6E4F0;
+    --blue-md: #A8C8E8;
+    --accent:  #F0A500;
+    --gray-bg: #F4F6FA;
+    --gray-ln: #D0D7E2;
+    --dark:    #1A1A2E;
+    --mid:     #444444;
+    --light:   #666666;
+    --green:   #217346;
+    --green-lt:#E2F0D9;
+    --white:   #ffffff;
+    --sidebar-w: 220px;
+  }
+
+  /* ── RESET ────────────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', Calibri, Arial, sans-serif; background: #eef2f8; color: var(--mid); min-height: 100vh; }
+
+  /* ── SHELL ───────────────────────────────────────────────────────── */
+  .shell { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+  /* ── TOP BAR ─────────────────────────────────────────────────────── */
+  .topbar {
+    background: var(--navy);
+    border-radius: 14px 14px 0 0;
+    padding: 18px 24px 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .topbar-left h1 { color: var(--white); font-size: 1.5rem; font-weight: 700; letter-spacing: .3px; }
+  .topbar-left p  { color: var(--blue-md); font-size: .8rem; margin-top: 2px; }
+  .topbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* share buttons */
+  .btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; border-radius: 8px; font-size: .82rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; transition: transform .12s, opacity .12s; white-space: nowrap; }
+  .btn:hover { opacity: .88; transform: translateY(-1px); }
+  .btn-wa   { background: #25D366; color: #fff; }
+  .btn-mail { background: var(--accent); color: #fff; }
+  .btn-copy { background: var(--blue); color: #fff; }
+  .btn svg  { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+
+  /* ── TABS ────────────────────────────────────────────────────────── */
+  .tabs {
+    background: var(--white);
+    display: flex; border-bottom: 2px solid var(--gray-ln);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .tab {
+    flex: 1; padding: 13px 12px; text-align: center; font-size: .85rem; font-weight: 600;
+    color: var(--light); cursor: pointer; border: none; background: none;
+    border-bottom: 3px solid transparent; margin-bottom: -2px;
+    transition: color .15s, border-color .15s;
+  }
+  .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+  .tab:hover:not(.active) { color: var(--navy); }
+
+  /* ── PANELS ──────────────────────────────────────────────────────── */
+  .panel { display: none; background: var(--white); border-radius: 0 0 14px 14px; }
+  .panel.active { display: block; }
+
+  /* ══════════════════════════════════════════════════════════════════
+     PANEL 1 — CURRÍCULO
+  ══════════════════════════════════════════════════════════════════ */
+  .cv-wrap { display: flex; }
+
+  /* sidebar */
+  .cv-sidebar {
+    width: var(--sidebar-w); min-width: var(--sidebar-w);
+    background: var(--gray-bg);
+    border-right: 2px solid var(--blue);
+    padding: 20px 14px;
+  }
+  .cv-sidebar .s-section {
+    font-size: .65rem; font-weight: 700; color: var(--navy);
+    letter-spacing: 1.2px; text-transform: uppercase;
+    border-bottom: 1.5px solid var(--blue); padding-bottom: 4px;
+    margin: 18px 0 8px; 
+  }
+  .cv-sidebar .s-section:first-child { margin-top: 0; }
+  .cv-sidebar .s-item {
+    font-size: .78rem; color: var(--mid); line-height: 1.55;
+    padding-left: 12px; position: relative; margin-bottom: 2px;
+  }
+  .cv-sidebar .s-item::before { content:'•'; position:absolute; left:0; color:var(--blue); }
+  .cv-sidebar .s-edu { margin-bottom: 10px; }
+  .cv-sidebar .s-edu .deg  { font-size: .78rem; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .cv-sidebar .s-edu .inst { font-size: .73rem; color: var(--blue); margin-top: 1px; }
+  .cv-sidebar .s-edu .yr   { font-size: .69rem; color: var(--light); font-style: italic; }
+  .cv-contact-item { display:flex; align-items:flex-start; gap:6px; font-size:.76rem; color:var(--mid); margin-bottom:5px; line-height:1.4; }
+  .cv-contact-item .ico { color: var(--blue); flex-shrink:0; margin-top:1px; }
+
+  /* main */
+  .cv-main { flex: 1; padding: 20px 22px; }
+  .cv-header-strip {
+    background: var(--navy); color: white;
+    padding: 16px 22px; margin: -20px -22px 18px;
+  }
+  .cv-header-strip h2 { font-size: 1.4rem; font-weight: 700; letter-spacing: .3px; }
+  .cv-header-strip p  { font-size: .78rem; color: var(--blue-md); margin-top: 3px; }
+
+  .cv-section { font-size: .68rem; font-weight: 700; color: var(--blue); letter-spacing: 1.1px; text-transform:uppercase; border-bottom: 1.5px solid var(--blue); padding-bottom: 3px; margin: 16px 0 8px; }
+  .cv-section:first-of-type { margin-top: 0; }
+  .cv-summary { font-size: .82rem; color: var(--mid); line-height: 1.55; text-align: justify; }
+
+  /* experience */
+  .job-group { margin-bottom: 14px; }
+  .company-row { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:4px; }
+  .company-name { font-size: .9rem; font-weight: 700; color: var(--dark); }
+  .company-loc  { font-size: .72rem; color: var(--light); }
+  .job-role-row { display:flex; align-items:baseline; gap:8px; margin: 3px 0 4px; flex-wrap:wrap; }
+  .job-role   { font-size: .8rem; color: var(--blue); font-style: italic; }
+  .job-period { font-size: .72rem; color: var(--light); }
+  .job-period::before { content: '|'; margin-right: 8px; color: var(--gray-ln); }
+  .bullets { padding-left: 0; list-style: none; }
+  .bullets li { font-size: .8rem; color: var(--mid); line-height: 1.5; margin-bottom: 3px; padding-left: 14px; position: relative; }
+  .bullets li::before { content:'▸'; position:absolute; left:0; color:var(--blue); font-size:.7rem; top:1px; }
+
+  /* ══════════════════════════════════════════════════════════════════
+     PANEL 2 — GUIA DE ENTREVISTA
+  ══════════════════════════════════════════════════════════════════ */
+  .guide-wrap { padding: 0; }
+
+  /* chapter nav */
+  .chapter-nav {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    padding: 14px 20px; background: var(--gray-bg);
+    border-bottom: 1px solid var(--gray-ln);
+  }
+  .chap-btn {
+    padding: 5px 11px; border-radius: 20px; font-size: .75rem; font-weight: 600;
+    border: 1.5px solid var(--blue-lt); background: white; color: var(--blue);
+    cursor: pointer; transition: all .15s;
+  }
+  .chap-btn:hover, .chap-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+
+  /* chapter content */
+  .chapter { display: none; padding: 24px 26px 28px; }
+  .chapter.active { display: block; }
+
+  .chap-eyebrow { font-size: .68rem; font-weight: 700; color: var(--blue); letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 4px; }
+  .chap-title   { font-size: 1.25rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; line-height: 1.25; }
+  .chap-meta    { font-size: .78rem; color: var(--light); margin-bottom: 16px; }
+  .chap-divider { height: 2px; background: var(--blue); border-radius: 2px; margin-bottom: 18px; }
+
+  /* metrics */
+  .metrics { display: flex; gap: 1px; margin-bottom: 18px; border-radius: 8px; overflow: hidden; border: 1px solid var(--blue-lt); }
+  .metric  { flex:1; background: var(--blue-lt); padding: 12px 8px; text-align:center; }
+  .metric-val  { font-size: 1.4rem; font-weight: 700; color: var(--accent); line-height:1; }
+  .metric-lbl  { font-size: .68rem; color: var(--light); margin-top: 3px; line-height: 1.3; }
+
+  /* STAR */
+  .star-grid { display:grid; grid-template-columns: 36px 1fr; gap: 2px; margin-bottom: 18px; border-radius: 8px; overflow:hidden; }
+  .star-letter { display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:700; color:white; padding:14px 0; }
+  .star-content { display:flex; flex-direction:column; justify-content:center; padding: 10px 14px; }
+  .star-label { font-size: .68rem; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color: var(--navy); }
+  .star-desc  { font-size: .8rem; color: var(--mid); margin-top:2px; }
+  .star-s { background: var(--blue); }
+  .star-t { background: #1A5276; }
+  .star-a { background: #154360; }
+  .star-r { background: var(--accent); }
+  .star-s-bg { background: var(--gray-bg); }
+  .star-t-bg { background: #f0f4f8; }
+  .star-a-bg { background: var(--gray-bg); }
+  .star-r-bg { background: #fef9ef; }
+
+  /* section headers inside chapter */
+  .g-section { font-size: .72rem; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:.9px; margin: 16px 0 6px; }
+
+  /* body text */
+  .g-body { font-size: .85rem; color: var(--mid); line-height: 1.6; text-align: justify; }
+
+  /* steps grid */
+  .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 4px; }
+  @media(max-width:600px){ .steps-grid { grid-template-columns: 1fr; } }
+  .step-card { background: var(--gray-bg); border-radius: 8px; padding: 11px 13px; display:flex; gap:10px; align-items:flex-start; }
+  .step-num  { background: var(--blue); color: white; border-radius: 50%; width:22px; height:22px; min-width:22px; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:700; }
+  .step-body h4 { font-size:.78rem; font-weight:700; color:var(--navy); margin-bottom:2px; }
+  .step-body p  { font-size:.75rem; color:var(--mid); line-height:1.4; }
+
+  /* highlight box */
+  .hl-box { border: 1px solid var(--blue); border-radius: 8px; overflow:hidden; margin-bottom: 14px; }
+  .hl-title { background: var(--blue-lt); padding:9px 14px; font-size:.78rem; font-weight:700; color:var(--navy); }
+  .hl-items { background: #fafcff; padding:8px 14px 10px; }
+  .hl-item  { font-size:.8rem; color:var(--mid); line-height:1.5; padding: 3px 0 3px 14px; position:relative; }
+  .hl-item::before { content:'▸'; position:absolute; left:0; color:var(--blue); font-size:.7rem; }
+
+  /* tip box */
+  .tip-box { background: var(--green-lt); border: 1px solid var(--green); border-radius: 8px; padding: 11px 14px; margin-top: 14px; }
+  .tip-label { font-size: .68rem; font-weight:700; color: var(--green); text-transform:uppercase; letter-spacing:.8px; margin-bottom:4px; }
+  .tip-body  { font-size: .8rem; color: #1D4A1D; line-height: 1.5; }
+
+  /* QA box */
+  .qa-box { border: 1px solid var(--blue); border-radius: 8px; overflow:hidden; margin-top: 14px; }
+  .qa-q { background: var(--blue-lt); padding: 9px 14px; font-size:.82rem; font-weight:700; color:var(--navy); }
+  .qa-q::before { content:'❓ '; }
+  .qa-a { background: #fafcff; padding: 10px 14px; font-size:.82rem; color:var(--mid); line-height:1.6; }
+
+  /* progress */
+  .chap-progress { display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+  .chap-progress-bar { flex:1; height:4px; background:var(--blue-lt); border-radius:2px; overflow:hidden; }
+  .chap-progress-fill { height:100%; background:var(--blue); border-radius:2px; transition:width .3s; }
+  .chap-progress-label { font-size:.7rem; color:var(--light); white-space:nowrap; }
+
+  /* prev/next */
+  .chap-nav-btns { display:flex; justify-content:space-between; margin-top:24px; gap:10px; }
+  .nav-btn { padding: 9px 18px; border-radius: 8px; font-size:.82rem; font-weight:600; cursor:pointer; border: 1.5px solid var(--blue); background:white; color:var(--blue); transition: all .15s; }
+  .nav-btn:hover { background:var(--blue); color:white; }
+  .nav-btn:disabled { opacity:.3; cursor:not-allowed; }
+  .nav-btn.primary { background:var(--blue); color:white; }
+  .nav-btn.primary:hover { background:var(--navy); border-color:var(--navy); }
+
+  /* ── TOAST ───────────────────────────────────────────────────────── */
+  .toast {
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(60px);
+    background:var(--navy); color:white; padding:10px 20px; border-radius:8px;
+    font-size:.82rem; font-weight:600; z-index:999;
+    transition:transform .25s ease, opacity .25s;
+    opacity:0; pointer-events:none;
+  }
+  .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+  /* ── SHARE MODAL ─────────────────────────────────────────────────── */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:200; align-items:center; justify-content:center; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:white; border-radius:14px; padding:28px; max-width:440px; width:90%; }
+  .modal h3 { font-size:1.05rem; font-weight:700; color:var(--navy); margin-bottom:6px; }
+  .modal p  { font-size:.82rem; color:var(--mid); line-height:1.55; margin-bottom:18px; }
+  .modal-actions { display:flex; flex-direction:column; gap:10px; }
+  .modal-btn { display:flex; align-items:center; gap:10px; padding:13px 16px; border-radius:9px; font-size:.85rem; font-weight:600; cursor:pointer; border:none; width:100%; text-align:left; transition:opacity .12s; }
+  .modal-btn:hover { opacity:.88; }
+  .modal-btn-wa   { background:#25D366; color:white; }
+  .modal-btn-mail { background:var(--accent); color:white; }
+  .modal-btn-copy { background:var(--blue); color:white; }
+  .modal-btn-close { background:var(--gray-bg); color:var(--mid); justify-content:center; }
+  .modal-btn svg { width:20px; height:20px; fill:currentColor; flex-shrink:0; }
+  .modal-subtitle { font-size:.72rem; color:var(--light); margin-bottom:12px; font-weight:600; text-transform:uppercase; letter-spacing:.8px; }
+
+  /* ── RESPONSIVE ───────────────────────────────────────────────────── */
+  @media(max-width:650px){
+    .cv-wrap { flex-direction:column; }
+    .cv-sidebar { width:100%; border-right:none; border-bottom:2px solid var(--blue); }
+    .topbar { flex-direction:column; align-items:flex-start; }
+    .chapter { padding:16px; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1>Gilberto Junior</h1>
+      <p>Especialista em PPCP &amp; ATC &nbsp;·&nbsp; 27 anos na Indústria Gráfica</p>
+    </div>
+    <div class="topbar-actions">
+      <a class="btn" style="background:#1F3864;border:1.5px solid #A8C8E8;" href="https://drive.google.com/file/d/1oQffwt3TGzISycdUVi9s04ZOFxD4CmtA/view" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        Ver PDF
+      </a>
+      <button class="btn btn-wa"   onclick="openShare('wa')">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </button>
+      <button class="btn btn-mail" onclick="openShare('email')">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        E-mail
+      </button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('cv', this)">📄 Currículo</button>
+    <button class="tab" onclick="switchTab('guide', this)">📖 Guia de Entrevista</button>
+  </div>
+
+  <!-- ══ PANEL: CURRÍCULO ══════════════════════════════════════════ -->
+  <div id="panel-cv" class="panel active">
+    <div class="cv-wrap">
+
+      <!-- SIDEBAR -->
+      <div class="cv-sidebar">
+        <div class="s-section">Contato</div>
+        <div class="cv-contact-item"><span class="ico">📍</span> Vinhedo, SP, Brasil</div>
+        <div class="cv-contact-item"><span class="ico">✉</span> gilberto.ppcp@gmail.com</div>
+        <div class="cv-contact-item"><span class="ico">🔗</span> linkedin.com/in/gilberto-junior-6642b313b</div>
+
+        <div class="s-section">Competências</div>
+        <div class="s-item">PPCP e ATC</div>
+        <div class="s-item">Programação e Planejamento da Produção</div>
+        <div class="s-item">Power Query &amp; Automação Excel</div>
+        <div class="s-item">Ferramentas com IA</div>
+        <div class="s-item">Gestão a Vista e Indicadores</div>
+        <div class="s-item">Análise e Geração de Relatórios</div>
+        <div class="s-item">Otimização de Processos Produtivos</div>
+        <div class="s-item">Gestão de Equipes Multidisciplinares</div>
+        <div class="s-item">Resolução de Problemas Complexos</div>
+        <div class="s-item">Controle de Custos Operacionais</div>
+
+        <div class="s-section">Formação</div>
+        <div class="s-edu">
+          <div class="deg">MBA em Gestão de Processos</div>
+          <div class="inst">Anhanguera Educacional</div>
+          <div class="yr">2022 – 2023</div>
+        </div>
+        <div class="s-edu">
+          <div class="deg">Lato Sensu – Adm. da Produção</div>
+          <div class="inst">UNINOVE</div>
+          <div class="yr">2010 – 2011</div>
+        </div>
+        <div class="s-edu">
+          <div class="deg">Tecnólogo – Logística e Supply Chain</div>
+          <div class="inst">UNINOVE</div>
+          <div class="yr">2008 – 2010</div>
+        </div>
+        <div class="s-edu">
+          <div class="deg">Técnico em Impressão Offset</div>
+          <div class="inst">SENAI Theobaldo De Nigris</div>
+          <div class="yr">2011 – 2013</div>
+        </div>
+
+        <div class="s-section">Idioma</div>
+        <div class="s-item">Português (nativo)</div>
+      </div>
+
+      <!-- MAIN -->
+      <div class="cv-main">
+        <div class="cv-header-strip">
+          <h2>Gilberto Junior</h2>
+          <p>Especialista em PPCP e ATC &nbsp;|&nbsp; Analista de ATC &nbsp;|&nbsp; Planejamento e Programação da Produção</p>
+        </div>
+
+        <div class="cv-section">Resumo Profissional</div>
+        <p class="cv-summary">Profissional com 27 anos de experiência na indústria gráfica, especialista em PPCP e ATC. MBA em Gestão de Processos. Histórico consistente de resultados mensuráveis: implantação de PCP do zero, transições operacionais complexas, automação com Power Query e criação de ferramentas com IA. Atuação transversal em planejamento, programação, atendimento e controle — sempre com foco em eficiência, redução de custos e multiplicação do conhecimento.</p>
+
+        <div class="cv-section">Experiência Profissional</div>
+
+        <!-- LOG&PRINT -->
+        <div class="job-group">
+          <div class="company-row">
+            <span class="company-name">Log&amp;Print Gráfica e Logística S/A</span>
+            <span class="company-loc">Vinhedo, SP</span>
+          </div>
+          <div class="job-role-row">
+            <span class="job-role">Analista de ATC – Carteira de Clientes</span>
+            <span class="job-period">abr/2024 – presente</span>
+          </div>
+          <ul class="bullets">
+            <li>Automatizou processos de atendimento com Power Query e ferramentas criadas com IA (Claude), reduzindo 50% no tempo operacional.</li>
+            <li>Multiplicou o conhecimento da equipe com ferramentas padronizadas, garantindo autonomia operacional sem aumento de quadro.</li>
+          </ul>
+          <div class="job-role-row" style="margin-top:8px">
+            <span class="job-role">Planejador de Produção</span>
+            <span class="job-period">jan/2022 – mar/2024</span>
+          </div>
+          <ul class="bullets">
+            <li>Participou de projeto colaborativo com equipes internas e do cliente (Qualidade, Manutenção, Produção, PPCP), contribuindo para ganho de 15% na eficiência operacional.</li>
+          </ul>
+          <div class="job-role-row" style="margin-top:8px">
+            <span class="job-role">Programador de Produção</span>
+            <span class="job-period">mar/2017 – dez/2021</span>
+          </div>
+          <ul class="bullets">
+            <li>Implantou sequenciamento inteligente de materiais (impressão ao acabamento), priorizando recursos gargalo e reduzindo 20% no ciclo de produção.</li>
+          </ul>
+        </div>
+
+        <!-- PEARSON -->
+        <div class="job-group">
+          <div class="company-row">
+            <span class="company-name">Pearson Brasil</span>
+            <span class="company-loc">ago/2013 – fev/2017 · Ribeirão Preto, SP</span>
+          </div>
+          <div class="job-role-row">
+            <span class="job-role">Programador de Produção</span>
+          </div>
+          <ul class="bullets">
+            <li>Aprofundou o uso do Sistema Metrics além do treinamento padrão, gerando visibilidade real sobre o fluxo produtivo.</li>
+            <li>Conduziu transição de Just in Case para Just in Time, eliminando estoques excessivos e galpão extra — redução de 30% nos custos operacionais.</li>
+          </ul>
+        </div>
+
+        <!-- BANDEIRANTES -->
+        <div class="job-group">
+          <div class="company-row">
+            <span class="company-name">Gráfica Bandeirantes</span>
+            <span class="company-loc">mai/2009 – ago/2013 · Guarulhos, SP</span>
+          </div>
+          <div class="job-role-row">
+            <span class="job-role">Programador de Produção</span>
+          </div>
+          <ul class="bullets">
+            <li>Implantou o PCP do zero em célula de gráfica digital, padronizando o fluxo da entrada à saída e eliminando o problema crônico de atrasos nas entregas — operação 25% mais eficiente.</li>
+          </ul>
+        </div>
+
+        <!-- POLICROMO -->
+        <div class="job-group">
+          <div class="company-row">
+            <span class="company-name">Policromo Indústria Gráfica Ltda</span>
+            <span class="company-loc">fev/2006 – mai/2009 · Guarulhos, SP</span>
+          </div>
+          <div class="job-role-row">
+            <span class="job-role">Assistente de PPCP</span>
+          </div>
+          <ul class="bullets">
+            <li>Implantou programação, gestão a vista por turno e sistema de premiação por produtividade — melhoria de 15% na eficiência com alta adesão da equipe.</li>
+          </ul>
+        </div>
+
+        <!-- BURTI -->
+        <div class="job-group">
+          <div class="company-row">
+            <span class="company-name">Gráficos Burti</span>
+            <span class="company-loc">jul/1999 – ago/2003 · Itaquaquecetuba, SP</span>
+          </div>
+          <div class="job-role-row">
+            <span class="job-role">Operador de Tráfego – Recepção / PPCP</span>
+          </div>
+          <ul class="bullets">
+            <li>Início de carreira em uma das maiores gráficas do Brasil; formação prática em PPCP, gestão de fluxo de materiais e controle de produção.</li>
+          </ul>
+        </div>
+
+      </div><!-- /cv-main -->
+    </div><!-- /cv-wrap -->
+  </div><!-- /panel-cv -->
+
+  <!-- ══ PANEL: GUIA ═══════════════════════════════════════════════ -->
+  <div id="panel-guide" class="panel">
+
+    <!-- chapter nav -->
+    <div class="chapter-nav" id="chapNav"></div>
+
+    <!-- chapters -->
+    <div id="chapContent"></div>
+
+  </div><!-- /panel-guide -->
+
+</div><!-- /shell -->
+
+<!-- SHARE MODAL -->
+<div class="modal-overlay" id="shareModal">
+  <div class="modal">
+    <h3 id="modalTitle">Compartilhar Currículo</h3>
+    <p id="modalDesc">Escolha como deseja enviar o currículo de Gilberto Junior.</p>
+    <div class="modal-subtitle">Selecione o canal</div>
+    <div class="modal-actions" id="modalActions"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+
+const CONTACT = {
+  name: 'Gilberto Junior',
+  email: 'gilberto.ppcp@gmail.com',
+  phone: '55',  // usuário preenche com DDD+número se quiser
+  linkedin: 'https://www.linkedin.com/in/gilberto-junior-6642b313b'
+};
+
+const PDF_DOWNLOAD = "https://drive.google.com/uc?export=download&id=1oQffwt3TGzISycdUVi9s04ZOFxD4CmtA";
+const PDF_PREVIEW  = "https://drive.google.com/file/d/1oQffwt3TGzISycdUVi9s04ZOFxD4CmtA/view";
+
+const CV_TEXT = `Gilberto Junior — Especialista em PPCP & ATC — 27 anos na Indústria Gráfica
+📍 Vinhedo, SP | ✉ gilberto.ppcp@gmail.com | 🔗 linkedin.com/in/gilberto-junior-6642b313b
+
+RESUMO
+Profissional com 27 anos de experiência na indústria gráfica, especialista em PPCP e ATC. MBA em Gestão de Processos. Histórico consistente de resultados mensuráveis em planejamento, programação, atendimento e controle de produção.
+
+EXPERIÊNCIA
+▸ Log&Print — Analista de ATC (abr/2024–presente)
+  • Automação com Power Query + IA: redução de 50% no tempo operacional
+▸ Log&Print — Planejador de Produção (jan/2022–mar/2024)
+  • Projeto colaborativo com cliente: +15% eficiência operacional
+▸ Log&Print — Programador de Produção (mar/2017–dez/2021)
+  • Sequenciamento inteligente: -20% no ciclo de produção
+▸ Pearson Brasil — Programador (ago/2013–fev/2017)
+  • Transição JIC→JIT: -30% nos custos operacionais
+▸ Gráfica Bandeirantes — Programador (mai/2009–ago/2013)
+  • PCP do zero em célula digital: +25% eficiência, fim dos atrasos
+▸ Policromo — Assistente PPCP (fev/2006–mai/2009)
+  • Gestão a vista + premiação: +15% eficiência
+▸ Gráficos Burti — Operador Tráfego/PPCP (jul/1999–ago/2003)
+  • Formação prática na maior gráfica do Brasil
+
+FORMAÇÃO
+• MBA Gestão de Processos — Anhanguera (2022–2023)
+• Lato Sensu Adm. Produção — UNINOVE (2010–2011)
+• Tecnólogo Logística/Supply — UNINOVE (2008–2010)
+• Técnico Impressão Offset — SENAI (2011–2013)`;
+
+const chapters = [
+  {
+    num: 1, title: 'O Método STAR', meta: 'Como estruturar qualquer resposta',
+    content: `star`
+  },
+  {
+    num: 2, title: 'ATC: Ferramentas que Reduziram 50%',
+    meta: 'Log&Print · Abr/2024 – Presente',
+    metrics: [['50%','Redução no tempo\noperacional'],['Power Query','Automação\nno Excel'],['IA','Artefatos via\nClaude AI']],
+    situacao: 'Ao assumir a carteira de clientes no ATC, os processos eram predominantemente manuais: cada consulta, controle e registro dependia de ações repetitivas no Excel sem automação. O volume era elevado e o tempo gasto em tarefas operacionais impedia foco em qualidade de atendimento.',
+    tarefa: 'Assumir a carteira e ao mesmo tempo desenvolver soluções que tornassem o processo mais eficiente sem aumentar o quadro. Reduzir o tempo operacional e criar ferramentas que qualquer colega pudesse replicar.',
+    steps: [
+      ['Diagnóstico do fluxo','Mapeou todas as etapas do atendimento, identificando tarefas repetitivas candidatas à automação.'],
+      ['Automação com Power Query','Aprendeu e aplicou Power Query no Excel para automatizar consultas, consolidação de dados e relatórios feitos antes manualmente.'],
+      ['Ferramentas com IA','A partir de 2026, passou a criar ferramentas com apoio do Claude AI, acelerando soluções customizadas para o fluxo do ATC.'],
+      ['Padronização','Documentou os novos fluxos e criou guias operacionais para replicação sem suporte.'],
+      ['Multiplicação do conhecimento','Treinou colegas nas ferramentas, garantindo que o ganho não ficasse restrito a uma pessoa.'],
+      ['Monitoramento','Acompanhou indicadores antes e após, confirmando a redução de 50%.'],
+    ],
+    impactos: ['Redução de 50% no tempo de atendimento e processamento.','Automação com Power Query eliminou retrabalho manual e erros.','Ferramentas com IA aceleraram soluções operacionais customizadas.','Equipe opera com autonomia usando as ferramentas criadas.'],
+    resposta30: 'Quando assumi o ATC, o processo consumia tempo demais em tarefas manuais repetitivas. Aprendi Power Query para automatizar as principais rotinas no Excel e, mais recentemente, passei a criar ferramentas com apoio de IA. O resultado foi uma redução de 50% no tempo operacional e um processo que a equipe inteira consegue replicar.'
+  },
+  {
+    num: 3, title: 'Planejamento: Eficiência +15%',
+    meta: 'Log&Print · Jan/2022 – Mar/2024',
+    metrics: [['15%','Aumento de\neficiência'],['Multi','Áreas: Qual., Manu.,\nProd., PPCP'],['Collab','Projeto com\nequipe do cliente']],
+    situacao: 'A empresa enfrentava variações de eficiência que não eram resolvidas internamente porque os impactadores estavam distribuídos entre múltiplas áreas: qualidade, manutenção, produção e PPCP. Cada área enxergava sua parte, mas ninguém tinha visão integrada.',
+    tarefa: 'Participar de um projeto colaborativo que reunisse o conhecimento de todas as áreas — incluindo colaboradores do principal cliente — para levantar e priorizar os impactadores de produtividade.',
+    steps: [
+      ['Formação do grupo','Articulou participação de colaboradores da Log&Print (qualidade, manutenção, produção, PPCP) e representantes do cliente.'],
+      ['Levantamento de impactadores','Conduziu sessões de mapeamento onde cada área contribuiu com sua visão, consolidando lista priorizada.'],
+      ['Análise cruzada','Cruzou informações de cada área para identificar causas raiz dos desvios de eficiência.'],
+      ['Plano de ação integrado','Desenvolveu plano com responsabilidades claras por área, prazos e métricas.'],
+      ['Execução e acompanhamento','Monitorou resultados semanalmente, ajustando prioridades conforme andamento.'],
+      ['Consolidação','Documentou as melhorias e institucionalizou práticas para evitar regressão.'],
+    ],
+    impactos: ['Aumento de 15% na eficiência operacional geral da produção.','Integração de conhecimento entre qualidade, manutenção, produção e PPCP.','Fortalecimento do relacionamento com o cliente pela participação conjunta.','Cultura de melhoria contínua com metodologia replicável.'],
+    resposta30: 'Identifiquei que os problemas de eficiência não seriam resolvidos por uma área sozinha. Participei de um grupo de trabalho com qualidade, manutenção, produção, PPCP e até colaboradores do nosso maior cliente. Juntos levantamos os principais impactadores e executamos um plano integrado. Resultado: 15% de aumento na eficiência operacional.'
+  },
+  {
+    num: 4, title: 'Programador: Redução de 20% no Ciclo',
+    meta: 'Log&Print · Mar/2017 – Dez/2021',
+    metrics: [['20%','Redução no\ntempo de ciclo'],['Sequen.','Alocação inteligente\nde materiais'],['Gargalo','Recursos\npriorizados']],
+    situacao: 'Os materiais eram alocados aleatoriamente, sem inteligência visando otimizar setup e produtividade. Trabalhos eram agendados sem considerar quais recursos eram gargalo, gerando trocas desnecessárias e tempos de setup elevados.',
+    tarefa: 'Criar um sequenciamento inteligente — da impressão ao acabamento — priorizando recursos gargalo e minimizando trocas de setup.',
+    steps: [
+      ['Identificação dos gargalos','Mapeou quais recursos eram os verdadeiros gargalos — os que determinavam o ritmo de saída.'],
+      ['Critérios de sequenciamento','Definiu critérios: trabalhos com mesmo substrato, formato ou tinta seriam agrupados para reduzir trocas.'],
+      ['Sequenciamento na impressão','Implementou sequenciamento por família de produtos, reduzindo drasticamente o setup entre trabalhos similares.'],
+      ['Alinhamento com o acabamento','Estendeu a lógica ao acabamento, garantindo fluxo otimizado após a impressão.'],
+      ['Priorização dos gargalos','Garantiu que recursos gargalo sempre tivessem fila preparada, eliminando paradas por falta de material.'],
+      ['Ajuste contínuo','Revisou os critérios mensalmente com base nos dados de produção.'],
+    ],
+    impactos: ['Redução de 20% nos tempos de ciclo.','Queda no tempo de setup por agrupamento inteligente.','Recursos gargalo com maior ocupação e menos paradas.','Base para as melhorias de planejamento posteriores.'],
+    resposta30: 'Os materiais eram alocados aleatoriamente, sem inteligência. Mapeei os gargalos e criei critérios de priorização — agrupando trabalhos por substrato, formato e tinta. O sequenciamento foi da impressão ao acabamento e reduziu 20% no tempo de ciclo.'
+  },
+  {
+    num: 5, title: 'Pearson: Sistema Metrics + Just in Time',
+    meta: 'Pearson Brasil · Ago/2013 – Fev/2017',
+    metrics: [['30%','Redução nos\ncustos operacionais'],['Metrics','Sistema exclusivo\nindústria gráfica'],['JIT','Just in Case\n→ Just in Time']],
+    situacao: 'A Pearson havia implantado o Sistema Metrics — exclusivo da indústria gráfica — mas era pouco explorado. O treinamento do Metrics não era suficiente. Além disso, a produção operava com Just in Case: estoques elevados, retrabalho frequente e aluguel de galpão extra.',
+    tarefa: 'Aprofundar o uso do Sistema Metrics e, com a troca de diretoria, participar da transição de Just in Case para Just in Time — uma mudança radical.',
+    steps: [
+      ['Imersão no Sistema Metrics','Foi além do treinamento básico, explorando funcionalidades de forma autônoma para entender o potencial real na programação gráfica.'],
+      ['Extração de valor','Utilizou o Metrics para gerar visibilidade sobre o fluxo produtivo, identificando acúmulos e ineficiências.'],
+      ['Suporte à transição JIT','Com a nova diretoria, participou da implantação do Just in Time — redução de estoques e produção puxada pela demanda real.'],
+      ['Redução do WIP','Trabalhou para reduzir material em processo, eliminando necessidade de espaço físico extra e custo de galpão.'],
+      ['Padronização dos fluxos','Redesenhou fluxos para eliminar o retrabalho causado pela desorganização anterior.'],
+      ['Medição dos resultados','Acompanhou indicadores de custo e eficiência, documentando a redução de 30%.'],
+    ],
+    impactos: ['Redução de 30% nos custos operacionais.','Sistema Metrics explorado com profundidade, gerando visibilidade real.','Eliminação do aluguel de galpão com redução de estoque intermediário.','Transição bem-sucedida de JIC para JIT — mudança cultural profunda.'],
+    resposta30: 'Na Pearson, o Sistema Metrics havia sido implantado mas era pouco aproveitado. Fui fundo no sistema e extraímos o valor que ele tinha. Com a troca de diretoria participei de uma mudança radical: saímos do Just in Case — com estoques elevados e galpão alugado — para o Just in Time. Essa transformação reduziu 30% nos custos operacionais.'
+  },
+  {
+    num: 6, title: 'Bandeirantes: PCP em Célula Digital +25%',
+    meta: 'Gráfica Bandeirantes · Mai/2009 – Ago/2013',
+    metrics: [['25%','Operação mais\neficiente'],['PCP','Implantado\ndo zero'],['T.I.','Parceria com\nT.I. e Produção']],
+    situacao: 'A Gráfica Bandeirantes operava como uma célula de gráfica digital sem programação ou controle: quem gritava mais levava. Os atrasos eram constantes e a padronização inexistia.',
+    tarefa: 'Implantar o PCP do zero em uma operação completamente reativa, sem parar a produção e sem perder a flexibilidade que a operação digital exige.',
+    steps: [
+      ['Aceitação e alinhamento','Aceitou o desafio e alinhou com T.I. e produção sobre objetivo, riscos e método.'],
+      ['Coleta de dados','Junto com T.I., coletou dados: volumes, tempos, frequência de pedidos e padrões de atraso.'],
+      ['Modelagem do PCP','Desenvolveu modelo de PCP adaptado à célula digital — com regras de priorização claras e visibilidade em tempo real.'],
+      ['Implantação gradual','Implantou gradualmente, testando em etapas para minimizar impacto na produção em curso.'],
+      ['Padronização do fluxo','Instituiu padronização desde a entrada do pedido até a saída, eliminando a lógica do "quem grita mais".'],
+      ['Consolidação','Mediu o ganho antes e depois da implantação, consolidando o modelo.'],
+    ],
+    impactos: ['Operação 25% mais eficiente com o mesmo quadro.','Fim do problema crônico de atrasos nas entregas.','Padronização completa do fluxo da entrada à saída.','Modelo reconhecido positivamente pela diretoria comercial.'],
+    resposta30: 'Na Bandeirantes era uma célula de gráfica digital sem nenhuma programação — quem gritava mais levava. Fui convidado a implantar o PCP do zero. Junto com T.I. e produção, coletamos dados, modelamos o PCP e implantamos gradualmente. Padronizamos o fluxo da entrada à saída e eliminamos o problema crônico de atrasos.'
+  },
+  {
+    num: 7, title: 'Policromo: Gestão a Vista + Premiação',
+    meta: 'Policromo Indústria Gráfica · Fev/2006 – Mai/2009',
+    metrics: [['15%','Melhoria de\neficiência'],['Gestão','a Vista\npor turno'],['Prêmio','por produtividade\ninstituído']],
+    situacao: 'Gráfica pequena com poucos recursos: sem controle estruturado, sem programação formal — apenas uma base de entrada de pedidos em Excel. O desafio era criar estrutura com recursos limitados e engajar as pessoas em torno da produtividade.',
+    tarefa: 'Implantar a programação de produção e um sistema de gestão a vista que tornasse o resultado de cada turno visível para todos, criando um ambiente competitivo saudável.',
+    steps: [
+      ['Implantação da programação','A partir do Excel de pedidos, criou a lógica de programação: priorizando, sequenciando e distribuindo trabalhos.'],
+      ['Gestão a Vista','Desenvolveu painel mostrando o resultado de cada turno: volumes, qualidade e performance versus meta.'],
+      ['Sistema de prêmios','Com o proprietário, criou sistema de prêmios por produtividade — reconhecimento para os melhores desempenhos.'],
+      ['Competição saudável','O objetivo era extrair o melhor de cada um, não jogar um contra o outro. Competição com a própria meta.'],
+      ['Gestão da adesão','Monitorou a adesão e ajustou regras para garantir que a iniciativa fosse percebida como justa.'],
+      ['Medição dos resultados','Acompanhou indicadores documentando melhoria de 15%.'],
+    ],
+    impactos: ['Melhoria de 15% na eficiência do processo.','Gestão a vista implementada: resultado de cada turno visível para todos.','Sistema de prêmios com ótima adesão e aceitação.','Ambiente competitivo saudável sem conflito.'],
+    resposta30: 'Na Policromo era uma gráfica pequena sem controle estruturado. Implantei a programação, criei um painel de gestão a vista por turno e, junto com o proprietário, instituímos prêmios por produtividade. A premissa era simples: não jogar um contra o outro, mas extrair o melhor de cada um. A eficiência aumentou 15% e a adesão foi muito boa.'
+  },
+  {
+    num: 8, title: 'Gráficos Burti: A Escola da Prática',
+    meta: 'Gráficos Burti · Jul/1999 – Ago/2003',
+    metrics: [['4','Anos de\nformação prática'],['Maior','Gráfica\ndo Brasil'],['Base','de toda\na carreira']],
+    situacao: 'Os Gráficos Burti era uma das maiores gráficas do Brasil. Ambiente de alta exigência técnica. Foi aqui que tudo começou — como um simples trainee que absorveu os fundamentos que sustentariam 27 anos de carreira.',
+    tarefa: 'Aprender e executar o controle do fluxo de materiais e informações entre setores, garantindo que cada etapa da produção recebesse o insumo certo no momento certo.',
+    steps: [
+      ['Controle de materiais','Gerenciou recebimento e rastreabilidade de materiais, identificando desvios antes de chegar à produção.'],
+      ['Fluxo de informações','Acompanhou ordens de serviço entre departamentos, aprendendo como a informação é o combustível do PPCP.'],
+      ['Comunicação entre setores','Atuou como elo entre recepção, PPCP e produção.'],
+      ['Formação técnica','Absorveu o funcionamento de uma grande gráfica — terminologias, fluxos, equipamentos e cultura.'],
+    ],
+    impactos: ['Base em PPCP construída em uma das maiores gráficas do Brasil — não teórica.','Progressão consistente: de trainee a especialista em 27 anos.','Comprometimento de longo prazo com a indústria gráfica.','A Burti era escola rigorosa — quem passou sabe trabalhar sob pressão real.'],
+    resposta30: 'Comecei minha carreira nos Gráficos Burti — uma das maiores gráficas do Brasil na época. Entrei como trainee e aprendi na prática os fundamentos de PPCP que aplico até hoje. Foi minha escola. São 27 anos que começaram ali, no volume real, com a pressão real.'
+  },
+  {
+    num: 9, title: 'Perguntas Difíceis',
+    meta: 'Estude antes de qualquer entrevista',
+    content: 'perguntas'
+  }
+];
+
+const perguntas = [
+  ['Qual foi o maior fracasso da sua carreira?',
+   'Escolha um erro real, mas mostre o aprendizado. Sugestão: "Em determinado momento, implantei um sistema de premiação sem comunicar suficientemente o critério para a equipe. Alguns entenderam como injusto. Aprendi que qualquer mudança que envolve pessoas precisa de comunicação antes, durante e depois — e desde então esse é sempre meu primeiro passo."'],
+  ['Por que você quer sair da Log&Print?',
+   '"Estou em busca de um novo desafio que me permita aplicar minha experiência em PPCP e ATC em um contexto mais amplo. A Log&Print foi fundamental para meu desenvolvimento — aprendi muito, entreguei muito. Saio com gratidão e em busca do próximo nível."'],
+  ['Você tem experiência com [sistema específico]?',
+   '"Não trabalhei com esse sistema específico, mas tenho experiência profunda com o Sistema Metrics — um sistema exclusivo da indústria gráfica. Aprendi a operar bem além do treinamento básico. Tenho facilidade em entender sistemas de produção e aprendo novos rapidamente."'],
+  ['Onde você se vê em 5 anos?',
+   '"Me vejo em uma posição de liderança em operações ou PPCP, contribuindo de forma estratégica. Tenho o MBA em Gestão de Processos para sustentar essa transição. Quero ser a pessoa que resolve problemas complexos de produção — não só operacionais, mas estruturais."'],
+  ['Qual é a sua maior fraqueza?',
+   '"Tenho tendência a querer resolver tudo sozinho antes de envolver a equipe. Aprendi a reconhecer isso e hoje minha regra é: se em 30 minutos não avancei, busco colaboração. Isso me tornou mais eficiente e a equipe mais capacitada."'],
+  ['Você consegue trabalhar sob pressão?',
+   '"Sim — e tenho exemplos em cada etapa da carreira. Implantar o PCP em célula digital sem parar a operação exigiu isso. A transição de JIC para JIT na Pearson também. A pressão é familiar. O que me manteve equilibrado sempre foi ter processo claro e dados — não reação emocional."'],
+  ['O que te diferencia de outros candidatos com experiência similar?',
+   '"Além dos 27 anos na indústria gráfica, desenvolvo ferramentas. Não fico só operando o que já existe — crio soluções. Na Log&Print, automatizei processos com Power Query e passei a usar IA para acelerar ainda mais. Trago mentalidade de melhoria contínua aliada à curiosidade tecnológica — e isso é cada vez mais raro em profissionais de PPCP."'],
+];
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + tab).classList.add('active');
+}
+
+// ── BUILD GUIDE ───────────────────────────────────────────────────────────────
+function buildGuide() {
+  const nav = document.getElementById('chapNav');
+  const content = document.getElementById('chapContent');
+
+  chapters.forEach((ch, i) => {
+    // nav button
+    const btn = document.createElement('button');
+    btn.className = 'chap-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = ch.num + '. ' + (ch.title.length > 22 ? ch.title.substring(0,20)+'…' : ch.title);
+    btn.onclick = () => showChapter(i);
+    nav.appendChild(btn);
+
+    // chapter div
+    const div = document.createElement('div');
+    div.className = 'chapter' + (i === 0 ? ' active' : '');
+    div.id = 'chap-' + i;
+
+    // progress
+    const pct = Math.round(((i + 1) / chapters.length) * 100);
+    let html = `
+      <div class="chap-progress">
+        <div class="chap-progress-bar"><div class="chap-progress-fill" style="width:${pct}%"></div></div>
+        <span class="chap-progress-label">Cap. ${ch.num} de ${chapters.length}</span>
+      </div>
+      <div class="chap-eyebrow">Capítulo ${ch.num}</div>
+      <div class="chap-title">${ch.title}</div>
+      <div class="chap-meta">${ch.meta}</div>
+      <div class="chap-divider"></div>
+    `;
+
+    // special: STAR chapter
+    if (ch.content === 'star') {
+      html += `
+      <p class="g-body" style="margin-bottom:16px">Recrutadores fazem perguntas como <em>"Me dê um exemplo de quando você melhorou um processo"</em>. A melhor estrutura para responder é o <strong>Método STAR</strong>. Cada capítulo deste guia está organizado nesse formato.</p>
+      <div class="star-grid">
+        <div class="star-letter star-s">S</div><div class="star-content star-s-bg"><div class="star-label">Situação</div><div class="star-desc">Contexto: onde, quando, qual era o cenário.</div></div>
+        <div class="star-letter star-t">T</div><div class="star-content star-t-bg"><div class="star-label">Tarefa</div><div class="star-desc">Qual era o seu desafio ou responsabilidade.</div></div>
+        <div class="star-letter star-a">A</div><div class="star-content star-a-bg"><div class="star-label">Ação</div><div class="star-desc">O que você fez — passo a passo. Este é o coração da resposta.</div></div>
+        <div class="star-letter star-r">R</div><div class="star-content star-r-bg"><div class="star-label">Resultado</div><div class="star-desc">O impacto mensurável. Sempre termine com números.</div></div>
+      </div>
+      <div class="tip-box"><div class="tip-label">💡 Dica para a entrevista</div><div class="tip-body">Treine em voz alta antes. Leia a resposta do capítulo correspondente, depois feche o app e repita com suas próprias palavras. Três repetições são suficientes.</div></div>`;
+    }
+    // special: perguntas chapter
+    else if (ch.content === 'perguntas') {
+      html += `<p class="g-body" style="margin-bottom:18px">As perguntas que mais pegam profissionais experientes de surpresa. Leia, adapte com suas palavras e pratique em voz alta.</p>`;
+      perguntas.forEach(([q, a]) => {
+        html += `<div class="qa-box"><div class="qa-q">${q}</div><div class="qa-a">${a}</div></div><br>`;
+      });
+    }
+    // standard STAR chapter
+    else {
+      // metrics
+      if (ch.metrics) {
+        html += '<div class="metrics">';
+        ch.metrics.forEach(([v,l]) => {
+          html += `<div class="metric"><div class="metric-val">${v}</div><div class="metric-lbl">${l.replace('\n','<br>')}</div></div>`;
+        });
+        html += '</div>';
+      }
+      html += `<div class="g-section">Situação</div><p class="g-body">${ch.situacao}</p>`;
+      html += `<div class="g-section">Tarefa</div><p class="g-body">${ch.tarefa}</p>`;
+      html += `<div class="g-section">Ação — Passo a Passo</div><div class="steps-grid">`;
+      ch.steps.forEach(([t,d], idx) => {
+        html += `<div class="step-card"><div class="step-num">${idx+1}</div><div class="step-body"><h4>${t}</h4><p>${d}</p></div></div>`;
+      });
+      html += '</div>';
+      html += `<div class="g-section">Resultado e Impacto no Negócio</div>
+        <div class="hl-box"><div class="hl-title">Impactos Alcançados</div><div class="hl-items">`;
+      ch.impactos.forEach(item => { html += `<div class="hl-item">${item}</div>`; });
+      html += '</div></div>';
+      html += `<div class="qa-box"><div class="qa-q">Como você descreveria essa conquista em 30 segundos?</div><div class="qa-a">${ch.resposta30}</div></div>`;
+      html += `<div class="tip-box"><div class="tip-label">💡 Dica</div><div class="tip-body">Pratique a resposta de 30 segundos em voz alta. Feche o app depois de ler e repita com suas próprias palavras.</div></div>`;
+    }
+
+    // prev / next
+    html += `<div class="chap-nav-btns">
+      <button class="nav-btn" onclick="showChapter(${i-1})" ${i===0?'disabled':''}>← Anterior</button>
+      <button class="nav-btn primary" onclick="showChapter(${i+1})" ${i===chapters.length-1?'disabled':''}>Próximo →</button>
+    </div>`;
+
+    div.innerHTML = html;
+    content.appendChild(div);
+  });
+}
+
+function showChapter(idx) {
+  if (idx < 0 || idx >= chapters.length) return;
+  document.querySelectorAll('.chapter').forEach((c,i) => c.classList.toggle('active', i===idx));
+  document.querySelectorAll('.chap-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.getElementById('chap-' + idx).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── SHARE ─────────────────────────────────────────────────────────────────────
+function openShare(trigger) {
+  const modal = document.getElementById('shareModal');
+  const title = document.getElementById('modalTitle');
+  const desc  = document.getElementById('modalDesc');
+  const actions = document.getElementById('modalActions');
+
+  title.textContent = 'Compartilhar Currículo';
+  desc.textContent  = 'Escolha como enviar o currículo de Gilberto Junior.';
+
+  const cvUrl = window.location.href;
+  const msgWA = encodeURIComponent(`Olá! Segue o currículo de *Gilberto Junior* — Especialista em PPCP & ATC com 27 anos de experiência na indústria gráfica.\n\nPrincipais resultados:\n• ATC: -50% no tempo operacional\n• Planejamento: +15% eficiência\n• Programação: -20% no ciclo\n• Pearson: -30% nos custos\n\n📎 Currículo em PDF: ${PDF_DOWNLOAD}\n✉ gilberto.ppcp@gmail.com\n🔗 ${CONTACT.linkedin}`);
+  const mailSubject = encodeURIComponent('Currículo — Gilberto Junior | Especialista PPCP & ATC');
+  const mailBody    = encodeURIComponent(`Prezado(a),\n\nEncaminho o currículo de Gilberto Junior — Especialista em PPCP e ATC com 27 anos de experiência na indústria gráfica.\n\nDestaques:\n• ATC (Log&Print, 2024–atual): -50% no tempo operacional com automação Power Query + IA\n• Planejamento: +15% eficiência em projeto colaborativo com equipe do cliente\n• Programação: -20% no ciclo com sequenciamento inteligente\n• Pearson Brasil: -30% nos custos operacionais com transição JIT\n• Bandeirantes: PCP do zero em célula digital — fim dos atrasos crônicos\n\nFormação: MBA em Gestão de Processos (Anhanguera)\n\n📎 Currículo em PDF para download: ${PDF_DOWNLOAD}\n\nContato: ${CONTACT.email}\nLinkedIn: ${CONTACT.linkedin}\n\nAtenciosamente,\nGilberto Junior`);
+
+  actions.innerHTML = `
+    <a class="modal-btn" style="background:#1F3864;color:white;" href="${PDF_DOWNLOAD}" target="_blank" download="curriculo_gilberto.pdf">
+      <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:white;flex-shrink:0"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Baixar PDF do Currículo
+    </a>
+    <a class="modal-btn modal-btn-wa" href="https://wa.me/?text=${msgWA}" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Enviar pelo WhatsApp
+    </a>
+    <a class="modal-btn modal-btn-mail" href="mailto:?subject=${mailSubject}&body=${mailBody}">
+      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      Enviar por E-mail
+    </a>
+    <button class="modal-btn modal-btn-copy" onclick="copyCV()">
+      <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+      Copiar texto do currículo
+    </button>
+    <button class="modal-btn modal-btn-close" onclick="closeModal()">Fechar</button>
+  `;
+
+  modal.classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('shareModal').classList.remove('open');
+}
+
+function copyCV() {
+  navigator.clipboard.writeText(CV_TEXT).then(() => {
+    closeModal();
+    showToast('✅ Texto copiado! Cole onde quiser.');
+  }).catch(() => {
+    showToast('Use Ctrl+C após selecionar o texto.');
+  });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// close modal on overlay click
+document.getElementById('shareModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+buildGuide();
+</script>
+</body>
+</html>
